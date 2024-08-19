@@ -19,4 +19,4 @@ function browseInput(inputFolder: string) {
   });
 }
 
-browseInput('../senelium');
+browseInput(process.env.INPUT_FOLDER || '');

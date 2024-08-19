@@ -8,7 +8,7 @@ export class MigratePageObjects {
     private readonly inputFolder: string,
     private readonly outputFolder: string,
     private readonly openai: OpenAI = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY || 'sk-',
+      apiKey: process.env.OPENAI_API_KEY || 'tip-or-trick',
     })
   ) {
   }
@@ -43,7 +43,8 @@ export class MigratePageObjects {
                       "Here are some rules you must obey when converting:" + 
                       "1. Store the page object (Page from @playwright/test) as a protected property in the BasePage class so sub-classes can use it." +
                       "2. Do not import unsued objects or classed." +
-                      "3. Import from package '@playwright/test' instead of 'playwright'."
+                      "3. Import from package '@playwright/test' instead of 'playwright'." +
+                      "4. Make sure you converted all files."
               }
           ]
         },
