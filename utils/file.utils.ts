@@ -51,3 +51,24 @@ export function findFilesBySearchTerm(searchDirectory: string, searchTerm: strin
     findFiles(searchDirectory);
     return pages;
 }
+
+export function findFilesRecursively(folder: string, ...ignore: string[]) {
+    let results: string[] = [];
+
+    function findFiles(dir: string) {
+        if (ignore.some(i => dir.includes(i))) {
+            return;
+        }
+        fs.readdirSync(dir).forEach(file => {
+            const filePath = path.join(dir, file);
+            const stat = fs.statSync(filePath);
+            if (stat.isDirectory()) {
+                findFiles(filePath);
+            } else {
+                results.push(filePath);
+            }
+        });
+    }
+    findFiles(folder);
+    return results;
+}

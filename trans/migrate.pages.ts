@@ -14,7 +14,7 @@ export class MigratePageObjects {
   }
 
   public async migratePages() {
-    console.log(`Migrating page objects from '${this.inputFolder}' to '${this.outputFolder}'`);
+    console.log(`\nMigrating page objects from '${this.inputFolder}' to '${this.outputFolder}'`);
     // Create the output folder
     fs.mkdirSync(this.outputFolder, { recursive: true });
 
@@ -37,9 +37,10 @@ export class MigratePageObjects {
           content: [
               {
                 type: "text",
-                text: "You are going to receive some page object file (Page Objec Model pattern) written in Java Selenium as well as the paths to those file." +
+                text: "You are going to receive some page object files (Page Object Model pattern) written in Java Selenium as well as the paths to those files." +
                       "Convert them to an equivalent number of Playwright page object files written in Typescript." +
-                      "The response should not contains any human language word, just the code encloded inside ```typescript <code here> ``` for each converted file. Files are separated by '-------------------'." + 
+                      "The response should not contains any human language word, just the code enclosed inside ```typescript <code here> ``` for each converted file." +
+                      "In the response, converted files are separated by '---*---'." + 
                       "Here are some rules you must obey when converting:" + 
                       "1. Store the page object (Page from @playwright/test) as a protected property in the BasePage class so sub-classes can use it." +
                       "2. Do not import unsued objects or classed." +
@@ -69,7 +70,7 @@ export class MigratePageObjects {
       console.error('Failed to get response from OpenAI');
       return;
     }
-    const convertedContent = openAIReponse.split('-------------------');
+    const convertedContent = openAIReponse.split('---*---');
 
     // Write the converted content to the output folder
     convertedContent.forEach((content, index) => {
@@ -84,6 +85,7 @@ export class MigratePageObjects {
       console.log(`Page object file '${pageObjectPaths[index]}' migrated to '${dest}'`);
     });
     console.log('Migration completed');
+    return openAIReponse;
   }
 
   public generateUserPrompt(inputs: {[key: string]: string}) {

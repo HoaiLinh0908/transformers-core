@@ -1,6 +1,7 @@
 import { BrowseInput } from "./browse.input";
 import { InitializeOutputProject } from "./init.output.project";
 import { MigratePageObjects } from "./migrate.pages";
+import { MigrateTests } from "./mirgrate.tests";
 
 function browseInput(inputFolder: string) {
   const browseInput = new BrowseInput(inputFolder);
@@ -15,7 +16,12 @@ function browseInput(inputFolder: string) {
 
     const pageObjectFolder = outputFolder + '/src/pages';
     const migratePages = new MigratePageObjects(inputFolder, pageObjectFolder);
-    migratePages.migratePages();
+    migratePages.migratePages().then(pageContents => {
+      const testsFolder = outputFolder + '/src/specs';
+      const migrateTests = new MigrateTests(inputFolder + '/src/test', testsFolder, pageContents as string);
+      migrateTests.migrateTests();
+    });
+    
   });
 }
 
