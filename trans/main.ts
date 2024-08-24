@@ -17,8 +17,7 @@ function browseInput(inputFolder: string) {
     const pageObjectFolder = outputFolder + '/src/pages';
     const migratePages = new MigratePageObjects(inputFolder, pageObjectFolder);
     migratePages.migratePages().then(pageContents => {
-      const testsFolder = outputFolder + '/src/specs';
-      const migrateTests = new MigrateTests(inputFolder + '/src/test', testsFolder, pageContents as string);
+      const migrateTests = new MigrateTests(inputFolder + '/src/test', outputFolder, pageContents as string);
       migrateTests.migrateTests();
     });
     
